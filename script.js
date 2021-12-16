@@ -36,11 +36,11 @@ const computerIcons = [
 ];
 
 const choices = {
-  Rock: { name: "Rock", defeats: ["Scissors", "Lizard"] },
-  Paper: { name: "Paper", defeats: ["Rock", "Spock"] },
-  Scissors: { name: "Scissors", defeats: ["Paper", "Lizard"] },
-  Lizard: { name: "Lizard", defeats: ["Paper", "Spock"] },
-  Spock: { name: "Spock", defeats: ["Scissors", "Rock"] },
+  Rock: { defeats: ["Scissors", "Lizard"] },
+  Paper: { defeats: ["Rock", "Spock"] },
+  Scissors: { defeats: ["Paper", "Lizard"] },
+  Lizard: { defeats: ["Paper", "Spock"] },
+  Spock: { defeats: ["Scissors", "Rock"] },
 };
 
 let lastPlayerChoice = null;
@@ -76,17 +76,28 @@ function calculateScore() {
   let playerChoice = lastPlayerChoice.title;
   if (computerChoice !== playerChoice) {
     if (choices[computerChoice].defeats.includes(playerChoice)) {
+      confetti.stop();
       computerScore++;
-      resultTest.textContent = "Computer Won!";
+      resultTest.textContent = "You Lost!";
     } else {
+      playConfetti();
       playerScore++;
       resultTest.textContent = "You Won!";
     }
   } else {
+    confetti.stop();
     resultTest.textContent = "It's a tie.";
   }
   playerScoreEl.textContent = playerScore;
   computerScoreEl.textContent = computerScore;
+}
+
+function playConfetti() {
+  confetti.start();
+
+  setTimeout(function () {
+    confetti.stop();
+  }, 3000);
 }
 
 playerIcons.forEach((icon) => {
@@ -102,8 +113,8 @@ function resetGame() {
 
   playerScore = 0;
   computerScore = 0;
-  playerScoreEl.textContent = "";
-  computerScoreEl.textContent = "";
+  playerScoreEl.textContent = 0;
+  computerScoreEl.textContent = 0;
   resultTest.textContent = "";
 }
 
