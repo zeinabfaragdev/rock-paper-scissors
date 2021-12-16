@@ -76,7 +76,7 @@ function calculateScore() {
   let playerChoice = lastPlayerChoice.title;
   if (computerChoice !== playerChoice) {
     if (choices[computerChoice].defeats.includes(playerChoice)) {
-      confetti.stop();
+      confetti.remove();
       computerScore++;
       resultTest.textContent = "You Lost!";
     } else {
@@ -85,7 +85,7 @@ function calculateScore() {
       resultTest.textContent = "You Won!";
     }
   } else {
-    confetti.stop();
+    confetti.remove();
     resultTest.textContent = "It's a tie.";
   }
   playerScoreEl.textContent = playerScore;
