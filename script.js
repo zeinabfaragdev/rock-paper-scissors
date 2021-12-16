@@ -78,15 +78,15 @@ function calculateScore() {
     if (choices[computerChoice].defeats.includes(playerChoice)) {
       confetti.remove();
       computerScore++;
-      resultTest.textContent = "You Lost!";
+      resultText.textContent = "You Lost!";
     } else {
       playConfetti();
       playerScore++;
-      resultTest.textContent = "You Won!";
+      resultText.textContent = "You Won!";
     }
   } else {
     confetti.remove();
-    resultTest.textContent = "It's a tie.";
+    resultText.textContent = "It's a tie.";
   }
   playerScoreEl.textContent = playerScore;
   computerScoreEl.textContent = computerScore;
