@@ -17,7 +17,7 @@ const computerChoiceEl = document.getElementById("computerChoice");
 const playerScoreEl = document.getElementById("playerScore");
 const computerScoreEl = document.getElementById("computerScore");
 
-const resultTest = document.getElementById("resultText");
+const resultText = document.getElementById("resultText");
 
 const playerIcons = [
   playerRock,
@@ -115,7 +115,7 @@ function resetGame() {
   computerScore = 0;
   playerScoreEl.textContent = 0;
   computerScoreEl.textContent = 0;
-  resultTest.textContent = "";
+  resultText.textContent = "";
 }
 
 resetIcon.addEventListener("click", resetGame);
