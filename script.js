@@ -14,6 +14,10 @@ const resetIcon = document.querySelector(".reset-icon");
 const allGameIcons = document.querySelectorAll(".far");
 const playerChoiceEl = document.getElementById("playerChoice");
 const computerChoiceEl = document.getElementById("computerChoice");
+const playerScoreEl = document.getElementById("playerScore");
+const computerScoreEl = document.getElementById("computerScore");
+
+const resultTest = document.getElementById("resultText");
 
 const playerIcons = [
   playerRock,
@@ -32,18 +36,18 @@ const computerIcons = [
 ];
 
 const choices = {
-  rock: { name: "Rock", defeats: ["scissors", "lizard"] },
-  paper: { name: "Paper", defeats: ["rock", "spock"] },
-  scissors: { name: "Scissors", defeats: ["paper", "lizard"] },
-  lizard: { name: "Lizard", defeats: ["paper", "spock"] },
-  spock: { name: "Spock", defeats: ["scissors", "rock"] },
+  Rock: { name: "Rock", defeats: ["Scissors", "Lizard"] },
+  Paper: { name: "Paper", defeats: ["Rock", "Spock"] },
+  Scissors: { name: "Scissors", defeats: ["Paper", "Lizard"] },
+  Lizard: { name: "Lizard", defeats: ["Paper", "Spock"] },
+  Spock: { name: "Spock", defeats: ["Scissors", "Rock"] },
 };
 
 let lastPlayerChoice = null;
 
 function selectIcon() {
   lastPlayerChoice && lastPlayerChoice.classList.remove("selected");
-  playerChoiceEl.textContent = ` --- ${this.id.slice(6)}`;
+  playerChoiceEl.textContent = ` --- ${this.title}`;
   this.classList.add("selected");
   lastPlayerChoice = this;
 
@@ -57,9 +61,32 @@ function computerSelectIcon() {
     computerIcons[Math.floor(Math.random() * computerIcons.length)];
 
   lastComputerChoice && lastComputerChoice.classList.remove("selected");
-  computerChoiceEl.textContent = ` --- ${computerIcon.id.slice(8)}`;
+  computerChoiceEl.textContent = ` --- ${computerIcon.title}`;
   computerIcon.classList.add("selected");
   lastComputerChoice = computerIcon;
+
+  calculateScore();
+}
+
+let playerScore = 0;
+let computerScore = 0;
+
+function calculateScore() {
+  let computerChoice = lastComputerChoice.title;
+  let playerChoice = lastPlayerChoice.title;
+  if (computerChoice !== playerChoice) {
+    if (choices[computerChoice].defeats.includes(playerChoice)) {
+      computerScore++;
+      resultTest.textContent = "Computer Won!";
+    } else {
+      playerScore++;
+      resultTest.textContent = "You Won!";
+    }
+  } else {
+    resultTest.textContent = "It's a tie.";
+  }
+  playerScoreEl.textContent = playerScore;
+  computerScoreEl.textContent = computerScore;
 }
 
 playerIcons.forEach((icon) => {
@@ -72,6 +99,12 @@ function resetGame() {
 
   lastComputerChoice.classList.remove("selected");
   computerChoiceEl.textContent = "";
+
+  playerScore = 0;
+  computerScore = 0;
+  playerScoreEl.textContent = "";
+  computerScoreEl.textContent = "";
+  resultTest.textContent = "";
 }
 
 resetIcon.addEventListener("click", resetGame);
